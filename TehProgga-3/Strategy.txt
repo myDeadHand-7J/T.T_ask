@@ -1,0 +1,43 @@
+    public interface SortingStrategy
+    {
+        void sort(int[] array);
+    }
+    public class BubbleSortStrategy : SortingStrategy
+    {
+        public void sort(int[] array)
+        {
+            Console.WriteLine("Sorting using Bubble Sort");
+        }
+    }
+    public class QuickSortStrategy : SortingStrategy
+    {
+        public void sort(int[] array)
+        {
+            Console.WriteLine("Sorting using Quick Sort");
+        }
+    }
+    public class Sorter
+    {
+        private SortingStrategy strategy;
+        public void setStrategy(SortingStrategy strategy)
+        {
+            this.strategy = strategy;
+        }
+        public void sortArray(int[] array)
+        {
+            strategy.sort(array);
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Sorter sorter = new Sorter();
+            sorter.setStrategy(new BubbleSortStrategy());
+            int[] array1 = { 5, 3, 8, 4, 2};
+            sorter.sortArray(array1);
+            sorter.setStrategy(new QuickSortStrategy());
+            int[] array2 = { 5, 3, 8, 4, 2 };
+            sorter.sortArray(array2);
+        }
+    }

@@ -1,0 +1,47 @@
+    interface Logger
+    {
+        void log(string message);
+    }
+    class FileLogger : Logger
+    {
+        public void log(string message)
+        {
+            Console.WriteLine("Logging to file: " + message);
+        }
+    }
+    class ConsoleLogger : Logger
+    {
+        public void log(string message)
+        {
+            Console.WriteLine("Logging to console: " + message);
+        }
+    }
+    abstract class LoggerFactory
+    {
+        public abstract Logger createLogger();
+        public void logMessage(string message)
+        {
+            Logger logger = createLogger();
+            logger.log(message);
+        }
+    }
+    class FileLoggerFactory : LoggerFactory
+    {
+        override public Logger createLogger()
+        {
+            return new FileLogger();
+        }
+    }
+    class ConsoleLoggerFactory : LoggerFactory
+    {
+        override public Logger createLogger()
+        {
+            return new ConsoleLogger();
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+    }

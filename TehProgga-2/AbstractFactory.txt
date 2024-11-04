@@ -1,0 +1,88 @@
+    public interface Button
+    {
+        void paint();
+    }
+    class WindowsButton : Button
+    {
+        public void paint()
+        {
+            Console.WriteLine("You have created a Windows button");
+        }
+    }
+    class MacButton : Button
+    {
+        public void paint()
+        {
+            Console.WriteLine("You have created a Mac button");
+        }
+    }
+    public interface Checkbox
+    {
+        void paint();
+    }
+    class WindowsCheckbox : Checkbox
+    {
+        public void paint()
+        {
+            Console.WriteLine("You have created a Windows checkbox");
+        }
+    }
+    class MacCheckbox : Checkbox
+    {
+        public void paint()
+        {
+            Console.WriteLine("You have created a Mac checkbox");
+        }
+    }
+    public interface GUIFactory
+    {
+        Button createButton();
+        Checkbox createCheckbox();
+    }
+    class WindowsFactory : GUIFactory
+    {
+        public Button createButton()
+        {
+            return new WindowsButton();
+        }
+        public Checkbox createCheckbox()
+        {
+            return new WindowsCheckbox();
+        }
+    }
+    class MacFactory : GUIFactory
+    {
+        public Button createButton()
+        {
+            return new MacButton();
+        }
+        public Checkbox createCheckbox()
+        {
+            return new MacCheckbox();
+        }
+    }
+    public class Application
+    {
+        private Button button;
+        private Checkbox checkbox;
+        public Application(GUIFactory factory)
+        {
+            button = factory.createButton();
+            checkbox = factory.createCheckbox();
+        }
+        public void paint()
+        {
+            button.paint();
+            checkbox.paint();
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Application app1 = new Application(new WindowsFactory());
+            app1.paint();
+            Application app2 = new Application(new MacFactory());
+            app2.paint();
+        }
+    }

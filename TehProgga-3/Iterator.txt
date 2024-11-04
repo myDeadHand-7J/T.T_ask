@@ -1,0 +1,34 @@
+    interface Iterator<T>
+    {
+        bool hasNext();
+        T next();
+    }
+    class ArrayIterator<T> : Iterator<T>
+    {
+        private T[] items;
+        private int position;
+        public void ConcreteIterator(T[] items)
+        {
+            this.items = items;
+            this.position = 0;
+        }
+        public bool hasNext()
+        {
+            return position < items.Length;
+        }
+        public T next()
+        {
+            if (this.hasNext())
+            {
+                return items[position++];
+            }
+            throw new IndexOutOfRangeException();
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+        }
+    }

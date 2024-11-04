@@ -1,0 +1,78 @@
+    class Pizza
+    {
+        private string dough;
+        private string sauce;
+        private string topping;
+        public void setDough(string dough)
+        {
+            this.dough = dough;
+        }
+        public void setSauce(string sauce)
+        {
+            this.sauce = sauce;
+        }
+        public void setTopping(string topping)
+        {
+            this.topping = topping;
+        }
+        public override string ToString()
+        {
+            return "Pizza{" + "dough=" + dough + ", sauce=" + topping + ", topping=" + topping + "}";
+        }
+    }
+    interface PizzaBuilder
+    {
+        void buildDough();
+        void buildSauce();
+        void buildTopping();
+        Pizza getResult();
+    }
+    class HawaiiPizzaBuilder : PizzaBuilder
+    {
+        private Pizza pizza;
+        public HawaiiPizzaBuilder()
+        {
+            this.pizza = new Pizza();
+        }
+        public void buildDough()
+        {
+            pizza.setDough("cross");
+        }
+        public void buildSauce()
+        {
+            pizza.setSauce("mild");
+        }
+        public void buildTopping()
+        {
+            pizza.setTopping("ham+pineapple");
+        }
+        public Pizza getResult()
+        {
+            return pizza;
+        }
+    }
+    class PizzaDirector
+    {
+        private PizzaBuilder builder;
+        public PizzaDirector(PizzaBuilder builder)
+        {
+            this.builder = builder;
+        }
+        public void constructPizza()
+        {
+            builder.buildDough();
+            builder.buildSauce();
+            builder.buildTopping();
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            PizzaBuilder builder = new HawaiiPizzaBuilder();
+            PizzaDirector director = new PizzaDirector(builder);
+            director.constructPizza();
+            Pizza pizza = builder.getResult();
+            Console.WriteLine(pizza);
+        }
+    }

@@ -1,0 +1,69 @@
+    interface Handler
+    {
+        void handlerRequest(Request request);
+        void setNextHandler(Handler nextHandler);
+    }
+    class ConcretHandlerA : Handler
+    {
+        private Handler nextHandler;
+        public void handlerRequest(Request request)
+        {
+            if (request.getType() == RequestType.TYPE_A)
+            {
+                Console.WriteLine("ConcreteHandlerA handled the request.");
+            }
+            else if (nextHandler != null)
+            {
+                nextHandler.handlerRequest(request);
+            }
+        }
+        public void setNextHandler(Handler nextHandler)
+        {
+            this.nextHandler = nextHandler;
+        }
+    }
+    class ConcreteHandlerB : Handler
+    {
+        private Handler nextHandler;
+        public void handlerRequest(Request request)
+        {
+            if (request.getType() == RequestType.TYPE_B)
+            {
+                Console.WriteLine("ConcreteHAndlerB handled the request.");
+            }
+            else if (nextHandler != null)
+            {
+                nextHandler.handlerRequest(request);
+            }
+        }
+        public void setNextHandler(Handler nextHandler)
+        {
+            this.nextHandler = nextHandler;
+        }
+    }
+    class Request
+    {
+        public RequestType type;
+        public Request(RequestType type)
+        {
+            this.type = type;
+        }
+        public RequestType getType()
+        {
+            return type;
+        }
+    }
+    enum RequestType { TYPE_A, TYPE_B }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Handler handlerA = new ConcretHandlerA();
+            Handler handlerB = new ConcreteHandlerB();
+            handlerA.setNextHandler(handlerB);
+            Request requestA = new Request(RequestType.TYPE_A);
+            Request requestB = new Request(RequestType.TYPE_B);
+            handlerA.handlerRequest(requestA);
+            handlerA.handlerRequest(requestB);
+        }
+    } 
