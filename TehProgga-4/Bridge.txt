@@ -1,0 +1,72 @@
+    public interface Device
+    {
+        void print(String data);
+    }
+    public class Monitor : Device
+    {
+        public void print(String data)
+        {
+            Console.WriteLine("Displaying on monitor: " + data);
+        }
+    }
+
+    public class Printer : Device
+    {
+        public void print(String data)
+        {
+            Console.WriteLine("Printing to paper: " + data);
+        }
+    }
+    public abstract class Output
+    {
+        protected Device device;
+
+        public Output(Device device)
+        {
+            this.device = device;
+        }
+
+        public abstract void render(String data);
+    }
+    public class TextOutput : Output
+    {
+        public TextOutput(Device device)
+        {
+            base(device);
+        }
+        override
+        public void render(String data)
+        {
+            device.print("Text: " + data);
+        }
+    }
+
+    public class ImageOutput : Output
+    {
+        public ImageOutput(Device device)
+        {
+            Device device;
+        }
+        override
+        public void render(String data)
+        {
+            device.print("Image: [Binary data: " + data + "]");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Device monitor = new Monitor();
+            Device printer = new Printer();
+
+            Output textOnMonitor = new TextOutput(monitor);
+            Output textOnPrinter = new TextOutput(printer);
+
+            textOnMonitor.render("Hello, world!");
+            textOnPrinter.render("Hello, world!");
+
+            Output imageOnMonitor = new ImageOutput(monitor);
+            imageOnMonitor.render("101010101");
+        }
+    }
