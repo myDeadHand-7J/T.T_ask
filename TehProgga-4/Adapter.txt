@@ -1,0 +1,35 @@
+    public class ExternalLogger
+    {
+        public void logMessage(String msg)
+        {
+            Console.WriteLine("External log: " + msg);
+        }
+    }
+    public interface Logger
+    {
+        void log(String message);
+    }
+    public class LoggerAdapter : Logger
+    {
+        private ExternalLogger externalLogger;
+
+        public LoggerAdapter(ExternalLogger externalLogger)
+        {
+            this.externalLogger = externalLogger;
+        }
+
+        public void log(String message)
+        {
+            externalLogger.logMessage(message);
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            ExternalLogger externalLogger = new ExternalLogger();
+            Logger logger = new LoggerAdapter(externalLogger);
+
+            logger.log("This is a test message."); 
+        }
+    }
